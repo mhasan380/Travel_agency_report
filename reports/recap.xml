@@ -1,0 +1,93 @@
+<odoo>
+    <record model="report.paperformat" id="paperformat_attendance_recap_report">
+        <field name="name">paperformat.attendance.recap.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="recap_report"
+            model="attendance.recap.report.wizard"
+            string="Profit Report"
+            report_type="qweb-pdf"
+            name="cj_custom_report.attendance_recap_report_view"
+            paperformat="paperformat_attendance_recap_report"
+            menu="False"/>
+
+    <template id="attendance_recap_report_view">
+        
+        <div class="article">
+            <table style="width:100%">
+                <thead>
+                       <th>Date</th>
+                       	<th>Airlines</th>
+						<th>Ticket Number</th>
+						<th>Gross Bill</th>
+						<th>IATA Bill</th>
+						<th>Profit</th>
+
+						</thead>
+                <tbody>
+                    <t t-set="total_ammount" t-value="0.0"/>
+                    <t t-foreach="hajis" t-as="haji">
+                        <tr>
+                       <td bgcolor="#ddd">
+                        		<span style="color:red;" t-esc="haji.ticket_date"/>
+                        	</td>
+                        	<td>
+                        		<span t-esc="haji.ar_name"/> 
+                        	</td>
+                        	<td>
+                               	<span t-esc="haji.ticket_no"/>
+                              	</td>
+                                                         
+                                                                       	
+                               <td>
+                                		<span t-esc="haji.total_bill"/> BDT
+                              	</td>
+                              	<td>
+                               		<span t-esc="haji.ita_bill"/> BDT
+                              	</td>
+                              	<td>
+                                		<span t-esc="haji.profit"/> BDT
+                              	</td>
+                    
+                    	
+                        </tr>
+                    </t>
+
+                    
+                </tbody>
+            </table>
+                     <div class='Profit' > 
+                        <h3>   Total Profit = <span style="color:red;" t-esc="total"/> BDT
+                        </h3>
+                    </div>
+        </div>
+       
+  <style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+  .Profit{
+      float:right;
+
+  }     
+  </style>
+
+    </template>
+</odoo>
